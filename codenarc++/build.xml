@@ -1,0 +1,46 @@
+<project name="Guidewire product configuration environment"
+         xmlns:ac="antlib:net.sf.antcontrib"
+         xmlns:gw="antlib:com.guidewire.ant.task"
+         default="help">
+
+
+<path id="gosu.codenarc.path">
+	<fileset dir="C:/Users/oprabhu001/Downloads/codenarc++/tools/gosu-codenarc/lib" includes="*.jar"/>
+	<pathelement path="C:/Users/oprabhu001/Downloads/codenarc++/tools/gosu-codenarc/config"/>
+</path>
+
+<taskdef name="codenarc" classname="org.codenarc.ant.CodeNarcTask" classpathref="gosu.codenarc.path"/>
+
+<target name="gosu-codenarc">
+	<echo message="Starting Gosu CodeNarc" />
+		<property name="gosu-codenarc.report.folder" value="C:/Users/oprabhu001/Downloads/codenarc++/tools/gosu-codenarc/reports" />
+		<property name="gosu-codenarc.report.name" value="GosuCodeNarcReport_new_custom_rules_gsrc.html" />
+		<property name="gosu-codenarc.report.path" value="${gosu-codenarc.report.folder}/${gosu-codenarc.report.name}" />
+			<mkdir dir="${gosu-codenarc.report.folder}" />
+						
+	<codenarc ruleSetFiles="file:C:/Users/oprabhu001/Downloads/codenarc++/tools/gosu-codenarc/rulesets/gosuruleset.xml">
+	
+		<report type="html">
+			<option name="outputFile" value="${gosu-codenarc.report.path}"/>
+			<option name="title" value="Gosu CodeNarc Report"/>
+		</report>
+		
+		<fileset dir="C:\workspace\ClaimCenter904\modules\configuration\gsrc">
+			<date datetime="2017.07.01 23:59" pattern="yyyy.MM.dd hh:mm" when ="after"/>
+			<exclude name="**/gw/**" />
+			<include name="**/*.gs" />
+			<include name="**/*.pcf" />
+			<include name="**/*.gr" />
+			<include name="**/*.grs" />
+			<include name="**/*.xml" />
+			<include name="**/*.properties" />
+			<include name="**/*.eti" />
+			<include name="**/*.tti" />
+			
+			</fileset>
+		
+	</codenarc>
+	<echo message="End Gosu CodeNarc - Please see report at ${gosu-codenarc.report.path} to check the results" />
+</target>
+
+</project>
